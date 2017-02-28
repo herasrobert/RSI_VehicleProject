@@ -39,16 +39,16 @@ public partial class Details : System.Web.UI.Page {
                 ColorLbl.Text = currentlySelectedCar.color;
                 InteriorLbl.Visible = true;
                 InteriorVarLbl.Visible = true;
-                InteriorVarLbl.Text = currentlySelectedCar.getInterior();
+                InteriorVarLbl.Text = currentlySelectedCar.Interior;
                 NumDoorsLbl.Visible = true;
                 NumDoorsVarLbl.Visible = true;
-                NumDoorsVarLbl.Text = ""+currentlySelectedCar.getNumberOfDoors();
+                NumDoorsVarLbl.Text = ""+currentlySelectedCar.NumberOfDoors;
                 KickStandExtLbl.Visible = false;
                 KickStandExtVarTxtBox.Visible = false;
                 KickStandBtn.Visible = false;
 
 
-                if (currentlySelectedCar.getIsEngineRunning() == true)
+                if (currentlySelectedCar.IsEngineRunning == true)
                 {
                     EngStatusTxtBox.Text = "On";
                 }
@@ -57,7 +57,7 @@ public partial class Details : System.Web.UI.Page {
                     EngStatusTxtBox.Text = "Off";
                 }
 
-                FuelLevelTxtBox.Text = ""+currentlySelectedCar.getFuel();
+                FuelLevelTxtBox.Text = ""+currentlySelectedCar.Fuel;
             }
             else if (currentlySelectedVehicle is Motorcycle) {
                 //Display Motorcycle Labels and stuff
@@ -71,7 +71,7 @@ public partial class Details : System.Web.UI.Page {
                 KickStandBtn.Visible = true;
 
 
-                if (currentlySelectMotorcycle.getIsEngineRunning() == true)
+                if (currentlySelectMotorcycle.IsEngineRunning == true)
                 {
                     EngStatusTxtBox.Text = "On";
                 }
@@ -80,7 +80,7 @@ public partial class Details : System.Web.UI.Page {
                     EngStatusTxtBox.Text = "Off";
                 }
 
-                FuelLevelTxtBox.Text = "" + currentlySelectMotorcycle.getFuel();
+                FuelLevelTxtBox.Text = "" + currentlySelectMotorcycle.Fuel;
             }
         }
 
@@ -91,13 +91,13 @@ public partial class Details : System.Web.UI.Page {
         if (currentlySelectedVehicle != null){
             if (currentlySelectedVehicle is Car){
                 
-                if (currentlySelectedCar.getFuel() > 0 && currentlySelectedCar.getIsEngineRunning() == false) {
+                if (currentlySelectedCar.Fuel > 0 && currentlySelectedCar.IsEngineRunning == false) {
                     currentlySelectedCar.StartEngine();
-                    currentlySelectedCar.subtractFuel(1);
+                    currentlySelectedCar.Fuel = currentlySelectedCar.Fuel - 1;
                 }
             }
             else if (currentlySelectedVehicle is Motorcycle) {
-                if (currentlySelectMotorcycle.getKickStandExtended() == false && currentlySelectMotorcycle.getIsEngineRunning() == false) {
+                if (currentlySelectMotorcycle.getKickStandExtended() == false && currentlySelectMotorcycle.IsEngineRunning == false) {
                     currentlySelectMotorcycle.StartEngine();
                 } else {
                     errorLabel.Text = "Can't Start Engine.";
@@ -112,7 +112,7 @@ public partial class Details : System.Web.UI.Page {
             if (currentlySelectedVehicle is Car)
             {
                
-                if (currentlySelectedCar.getIsEngineRunning())
+                if (currentlySelectedCar.IsEngineRunning)
                 {
                     currentlySelectedCar.StopEngine();
                 }
@@ -123,7 +123,7 @@ public partial class Details : System.Web.UI.Page {
             }
             else if (currentlySelectedVehicle is Motorcycle)
             {                
-                if (currentlySelectMotorcycle.getKickStandExtended() == true && currentlySelectMotorcycle.getIsEngineRunning() == true)
+                if (currentlySelectMotorcycle.getKickStandExtended() == true && currentlySelectMotorcycle.IsEngineRunning == true)
                 {
                     currentlySelectMotorcycle.StopEngine();
                 }
@@ -154,12 +154,12 @@ public partial class Details : System.Web.UI.Page {
         {
             if (currentlySelectedVehicle is Car)
             {   
-                if (currentlySelectedCar.getFuel() == 0)
+                if (currentlySelectedCar.Fuel == 0)
                 {
                     errorLabel.Text = "Not Enough Fuel - Stoping Engine";
                     currentlySelectedCar.StopEngine();
                 }
-                else if (currentlySelectedCar.getFuel() > 1 && currentlySelectedCar.getIsEngineRunning() == true)
+                else if (currentlySelectedCar.Fuel > 1 && currentlySelectedCar.IsEngineRunning == true)
                 {
                     currentlySelectedCar.Accelerate();
                 }
@@ -170,13 +170,13 @@ public partial class Details : System.Web.UI.Page {
             }
             else if (currentlySelectedVehicle is Motorcycle)
             {
-                if (currentlySelectMotorcycle.getFuel() == 0)
+                if (currentlySelectMotorcycle.Fuel == 0)
                 {
                     errorLabel.Text = "Not Enough Fuel - Stoping Engine";
                     currentlySelectMotorcycle.RetractKickStand();
                     currentlySelectMotorcycle.StopEngine();
                 }
-                else if (currentlySelectMotorcycle.getFuel() > 2 && currentlySelectMotorcycle.getIsEngineRunning() == true)
+                else if (currentlySelectMotorcycle.Fuel > 2 && currentlySelectMotorcycle.IsEngineRunning == true)
                 {
                     currentlySelectMotorcycle.Accelerate();
                 }

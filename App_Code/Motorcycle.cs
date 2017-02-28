@@ -3,37 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-/// <summary>
-/// Summary description for Motorcycle
-/// </summary>
 public class Motorcycle : Vehicle {
     bool KickStandExtended = true;
 
 
-    public Motorcycle(string makeRef, string modelRef, string colorRef) {
-        this.make = makeRef;
-        this.model = modelRef;
-        this.color = colorRef;
-        this.numberOfWheels = 2;
-        this.Fuel = 5;
-        this.IsEngineRunning = false;
+    public Motorcycle(string makeRef, string modelRef, string colorRef) : base(makeRef, modelRef, colorRef)
+    {
+        NumberOfWheels = 2;
+        Fuel = 5;
+        IsEngineRunning = false;
         RetractKickStand();
     }
 
     public override void Accelerate(){
-        subtractFuel(2);
+        Fuel = Fuel - 2;
     }
 
     public override void FuelUp(){
-        setFuel(5);
+        Fuel = 5;
     }
 
     public override void StartEngine(){
-        setIsEngineRunning(true);
+        IsEngineRunning = true;
     }
 
     public override void StopEngine(){
-        setIsEngineRunning(false);
+        IsEngineRunning = false;
     }
 
     public void DeployKickStand() {
@@ -43,34 +38,36 @@ public class Motorcycle : Vehicle {
     public void RetractKickStand() {
         KickStandExtended = true;
     }
-
-    public int getFuel()
-    {
-        return this.Fuel;
-    }
-
-    private void setFuel(int value) {
-        this.Fuel = value;
-    }
-
-    private void setIsEngineRunning(bool value) {
-        this.IsEngineRunning = value;
-    }
-
-    public bool getIsEngineRunning()
-    {
-        return this.IsEngineRunning;
-    }
-
+    
     public bool getKickStandExtended()
     {
         return this.KickStandExtended;
     }
 
-    public void subtractFuel(int value)
+    public int Fuel
     {
-        this.Fuel -= value;
+        get
+        {
+            return fuel;
+        }
+        set
+        {
+            fuel = value;
+        }
     }
+
+    public bool IsEngineRunning
+    {
+        get
+        {
+            return isEngineRunning;
+        }
+        set
+        {
+            isEngineRunning = value;
+        }
+    }
+
 
     public void switchKickStand() {
         if (getKickStandExtended() == true)
@@ -79,6 +76,18 @@ public class Motorcycle : Vehicle {
         }
         else {
             RetractKickStand();
+        }
+    }
+
+    public int NumberOfWheels
+    {
+        get
+        {
+            return numberOfWheels;
+        }
+        set
+        {
+            numberOfWheels = value;
         }
     }
 }

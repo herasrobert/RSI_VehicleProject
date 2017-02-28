@@ -9,18 +9,21 @@ using System.Web;
 /// 
 public abstract class Vehicle {
     public Guid ID { get; set; }
-    protected int Fuel { get; set; }
-    protected bool IsEngineRunning { get; set; }
+    protected int fuel { get; set; }
+    protected bool isEngineRunning { get; set; }
     public string make { get; set; }
     public string model { get; set; }
     public string color { get; set; }
     protected int numberOfWheels { get; set; }
 
-    public Vehicle() {
+    public Vehicle(string makeRef, string modelRef, string colorRef) {
         ID = Guid.NewGuid(); // this creates a Unique identifier
-        Fuel = 0; // all vehicles start with no fuel
-        IsEngineRunning = false; // all vehicles start with the engine off
+        fuel = 0; // all vehicles start with no fuel
+        isEngineRunning = false; // all vehicles start with the engine off
 
+        this.make = makeRef;
+        this.model = modelRef;
+        this.color = colorRef;
         // add other initializers as needed
     }
 

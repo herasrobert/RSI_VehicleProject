@@ -3,71 +3,92 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-/// <summary>
-/// Summary description for Car
-/// </summary>
 public class Car : Vehicle{
     string interior { get; set; }
     int numberOfDoors { get; set; }
 
-    public Car(string makeRef, string modelRef, string colorRef, string interiorRef, int numberOfDoorsRef) {
-        this.make = makeRef;
-        this.model = modelRef;
-        this.color = colorRef;
-        this.numberOfWheels = 4;
-        this.interior = interiorRef;
-        this.numberOfDoors = numberOfDoorsRef;
-        this.Fuel = 5;
-        this.IsEngineRunning = false;
+    public Car(string makeRef, string modelRef, string colorRef, string interiorRef, int numberOfDoorsRef) : base(makeRef, modelRef, colorRef) {       
+        NumberOfWheels = 4;
+        Interior = interiorRef;
+        NumberOfDoors = numberOfDoorsRef;
+        Fuel = 5;
+        IsEngineRunning = false;
     }
-
+    
     public override void Accelerate() {
-        subtractFuel(1);
+        Fuel = Fuel - 1;
     }
 
     public override void FuelUp() {
-        setFuel(5);
+        Fuel = 5;
     }
 
     public override void StartEngine() {
-        setIsEngineRunning(true);
+        IsEngineRunning = true;
     }   
 
     public override void StopEngine() {
-        setIsEngineRunning(false);
+        IsEngineRunning = false;
     }
 
-    public int getFuel() {
-        return this.Fuel;
-    }
-
-    private void setFuel(int value)
+    public int Fuel
     {
-        this.Fuel = value;
+        get
+        {
+            return fuel;
+        }
+        set
+        {
+            fuel = value;
+        }
     }
 
-    private void setIsEngineRunning(bool value)
+    public bool IsEngineRunning
     {
-        this.IsEngineRunning = value;
-    }
+        get
+        {
+            return isEngineRunning;
+        }
+        set
+        {
+            isEngineRunning = value;
+        }
+    }    
 
-
-    public bool getIsEngineRunning() {
-        return this.IsEngineRunning;
-    }
-
-    public string getInterior() {
-        return this.interior;
-    }
-
-    public int getNumberOfDoors()
+    public string Interior
     {
-        return this.numberOfDoors;
+        get
+        {
+            return interior;
+        }
+        set
+        {
+            interior = value;
+        }
     }
 
-    public void subtractFuel(int value)
+    public int NumberOfDoors
     {
-        this.Fuel -= value;
+        get
+        {
+            return numberOfDoors;
+        }
+        set
+        {
+            numberOfDoors = value;
+        }
+    }
+
+    public int NumberOfWheels
+    {
+        get
+        {
+            return numberOfWheels;
+        }
+        set
+        {
+            numberOfWheels = value;
+        }
     }
 
 
