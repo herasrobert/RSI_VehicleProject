@@ -30,8 +30,14 @@ public partial class Details : System.Web.UI.Page {
             }
         }
 
-        if (currentlySelectedVehicle != null) { 
-            if (currentlySelectedVehicle is Car) {
+        if (currentlySelectedVehicle == null)
+        {
+            //Redirect to Main Page
+            Server.Transfer("Default.aspx", true);
+        }
+        else { 
+            if (currentlySelectedVehicle is Car)
+            {
                 //Display Car Labels and stuff
                 TypeLbl.Text = "Car";
                 MakeLbl.Text = currentlySelectedCar.make;
@@ -42,7 +48,7 @@ public partial class Details : System.Web.UI.Page {
                 InteriorVarLbl.Text = currentlySelectedCar.Interior;
                 NumDoorsLbl.Visible = true;
                 NumDoorsVarLbl.Visible = true;
-                NumDoorsVarLbl.Text = ""+currentlySelectedCar.NumberOfDoors;
+                NumDoorsVarLbl.Text = "" + currentlySelectedCar.NumberOfDoors;
                 KickStandExtLbl.Visible = false;
                 KickStandExtVarTxtBox.Visible = false;
                 KickStandBtn.Visible = false;
@@ -57,9 +63,10 @@ public partial class Details : System.Web.UI.Page {
                     EngStatusTxtBox.Text = "Off";
                 }
 
-                FuelLevelTxtBox.Text = ""+currentlySelectedCar.Fuel;
+                FuelLevelTxtBox.Text = "" + currentlySelectedCar.Fuel;
             }
-            else if (currentlySelectedVehicle is Motorcycle) {
+            else if (currentlySelectedVehicle is Motorcycle)
+            {
                 //Display Motorcycle Labels and stuff
                 TypeLbl.Text = "Motorcycle";
                 MakeLbl.Text = currentlySelectMotorcycle.make;
@@ -67,7 +74,7 @@ public partial class Details : System.Web.UI.Page {
                 ColorLbl.Text = currentlySelectMotorcycle.color;
                 KickStandExtLbl.Visible = true;
                 KickStandExtVarTxtBox.Visible = true;
-                KickStandExtVarTxtBox.Text = ""+currentlySelectMotorcycle.getKickStandExtended();
+                KickStandExtVarTxtBox.Text = "" + currentlySelectMotorcycle.getKickStandExtended();
                 KickStandBtn.Visible = true;
 
 
@@ -87,113 +94,99 @@ public partial class Details : System.Web.UI.Page {
 
     }
 
-    protected void StartEngBtn_Click(object sender, EventArgs e) {
-        if (currentlySelectedVehicle != null){
-            if (currentlySelectedVehicle is Car){
+    protected void StartEngBtn_Click(object sender, EventArgs e) {        
+        if (currentlySelectedVehicle is Car){
                 
-                if (currentlySelectedCar.Fuel > 0 && currentlySelectedCar.IsEngineRunning == false) {
-                    currentlySelectedCar.StartEngine();
-                    currentlySelectedCar.Fuel = currentlySelectedCar.Fuel - 1;
-                }
-            }
-            else if (currentlySelectedVehicle is Motorcycle) {
-                if (currentlySelectMotorcycle.getKickStandExtended() == false && currentlySelectMotorcycle.IsEngineRunning == false) {
-                    currentlySelectMotorcycle.StartEngine();
-                } else {
-                    errorLabel.Text = "Can't Start Engine.";
-                }
+            if (currentlySelectedCar.Fuel > 0 && currentlySelectedCar.IsEngineRunning == false) {
+                currentlySelectedCar.StartEngine();
+                currentlySelectedCar.Fuel = currentlySelectedCar.Fuel - 1;
             }
         }
+        else if (currentlySelectedVehicle is Motorcycle) {
+            if (currentlySelectMotorcycle.getKickStandExtended() == false && currentlySelectMotorcycle.IsEngineRunning == false) {
+                currentlySelectMotorcycle.StartEngine();
+            } else {
+                errorLabel.Text = "Can't Start Engine.";
+            }
+        }        
     }
 
-    protected void StopEngBtn_Click(object sender, EventArgs e) {
-        if (currentlySelectedVehicle != null)
+    protected void StopEngBtn_Click(object sender, EventArgs e) {        
+        if (currentlySelectedVehicle is Car)
         {
-            if (currentlySelectedVehicle is Car)
-            {
                
-                if (currentlySelectedCar.IsEngineRunning)
-                {
-                    currentlySelectedCar.StopEngine();
-                }
-                else
-                {
-                    errorLabel.Text = "Can't Accelerate - Check Engine is actually On";
-                }
+            if (currentlySelectedCar.IsEngineRunning)
+            {
+                currentlySelectedCar.StopEngine();
             }
-            else if (currentlySelectedVehicle is Motorcycle)
-            {                
-                if (currentlySelectMotorcycle.getKickStandExtended() == true && currentlySelectMotorcycle.IsEngineRunning == true)
-                {
-                    currentlySelectMotorcycle.StopEngine();
-                }
-                else
-                {
-                    errorLabel.Text = "Can't Accelerate - Check Engine or Kick Stand";
-                }
+            else
+            {
+                errorLabel.Text = "Can't Accelerate - Check Engine is actually On";
             }
         }
+        else if (currentlySelectedVehicle is Motorcycle)
+        {                
+            if (currentlySelectMotorcycle.getKickStandExtended() == true && currentlySelectMotorcycle.IsEngineRunning == true)
+            {
+                currentlySelectMotorcycle.StopEngine();
+            }
+            else
+            {
+                errorLabel.Text = "Can't Accelerate - Check Engine or Kick Stand";
+            }
+        }        
     }
 
-    protected void FuelUpBtn_Click(object sender, EventArgs e) {
-        if (currentlySelectedVehicle != null)
+    protected void FuelUpBtn_Click(object sender, EventArgs e) {        
+        if (currentlySelectedVehicle is Car)
         {
-            if (currentlySelectedVehicle is Car)
-            {
-                currentlySelectedCar.FuelUp();
-            }
-            else if (currentlySelectedVehicle is Motorcycle)
-            {
-                currentlySelectMotorcycle.FuelUp();
-            }
+            currentlySelectedCar.FuelUp();
         }
+        else if (currentlySelectedVehicle is Motorcycle)
+        {
+            currentlySelectMotorcycle.FuelUp();
+        }        
     }
 
-    protected void AccelerateBtn_Click(object sender, EventArgs e) {
-        if (currentlySelectedVehicle != null)
-        {
-            if (currentlySelectedVehicle is Car)
-            {   
-                if (currentlySelectedCar.Fuel == 0)
-                {
-                    errorLabel.Text = "Not Enough Fuel - Stoping Engine";
-                    currentlySelectedCar.StopEngine();
-                }
-                else if (currentlySelectedCar.Fuel > 1 && currentlySelectedCar.IsEngineRunning == true)
-                {
-                    currentlySelectedCar.Accelerate();
-                }
-                else
-                {
-                    errorLabel.Text = "Can't Accelerate - Check Engine";
-                }
-            }
-            else if (currentlySelectedVehicle is Motorcycle)
+    protected void AccelerateBtn_Click(object sender, EventArgs e) {        
+        if (currentlySelectedVehicle is Car)
+        {   
+            if (currentlySelectedCar.Fuel == 0)
             {
-                if (currentlySelectMotorcycle.Fuel == 0)
-                {
-                    errorLabel.Text = "Not Enough Fuel - Stoping Engine";
-                    currentlySelectMotorcycle.RetractKickStand();
-                    currentlySelectMotorcycle.StopEngine();
-                }
-                else if (currentlySelectMotorcycle.Fuel > 2 && currentlySelectMotorcycle.IsEngineRunning == true)
-                {
-                    currentlySelectMotorcycle.Accelerate();
-                }
-                else {
-                    errorLabel.Text = "Can't Accelerate - Check Engine or KickStand";
-                }
+                errorLabel.Text = "Not Enough Fuel - Stoping Engine";
+                currentlySelectedCar.StopEngine();
+            }
+            else if (currentlySelectedCar.Fuel > 1 && currentlySelectedCar.IsEngineRunning == true)
+            {
+                currentlySelectedCar.Accelerate();
+            }
+            else
+            {
+                errorLabel.Text = "Can't Accelerate - Check Engine";
             }
         }
+        else if (currentlySelectedVehicle is Motorcycle)
+        {
+            if (currentlySelectMotorcycle.Fuel == 0)
+            {
+                errorLabel.Text = "Not Enough Fuel - Stoping Engine";
+                currentlySelectMotorcycle.RetractKickStand();
+                currentlySelectMotorcycle.StopEngine();
+            }
+            else if (currentlySelectMotorcycle.Fuel > 2 && currentlySelectMotorcycle.IsEngineRunning == true)
+            {
+                currentlySelectMotorcycle.Accelerate();
+            }
+            else {
+                errorLabel.Text = "Can't Accelerate - Check Engine or KickStand";
+            }
+        }        
     }
 
-    protected void KickStandBtn_Click(object sender, EventArgs e) {
-        if (currentlySelectedVehicle != null)
+    protected void KickStandBtn_Click(object sender, EventArgs e) {        
+        if (currentlySelectedVehicle is Motorcycle)
         {
-            if (currentlySelectedVehicle is Motorcycle)
-            {
-                currentlySelectMotorcycle.switchKickStand();
-            }
-        }
+            currentlySelectMotorcycle.switchKickStand();
+        }       
     }
 }
